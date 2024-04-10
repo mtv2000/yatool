@@ -1,22 +1,41 @@
-Проверить и убрать ссылки на Аркадию
-Сообщения ymake конфигурации (построения) сборочного графа
+Проверить и убрать ссылки на Аркадию - Сделано.
+Подготовка к описанию ya make
+## Сообщения ymake конфигурации (построения) сборочного графа
+
 BadAuto
+
 BadDir
+
 BadFile
+
 BadIncl
+
 BadSrc
+
 BlckLst
+
 DEPENDENCY_MANAGEMENT
+
 DupSrc
+
 Garbage
+
 Loop
+
 NoOutput
+
 Syntax
+
 UnkStatm
+
 ChkPeers
+
 UserErr
+
 UserWarn
+
 BadAuto
+
 TBD
 
 BadDir
