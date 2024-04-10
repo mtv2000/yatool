@@ -1,3 +1,5 @@
+Переписать полностью
+
 https://docs.yandex-team.ru/ya-make/general/how_it_works#content_uids
 
 Шаг 1. Построение графа зависимостей (ymake)
