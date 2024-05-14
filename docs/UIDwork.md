@@ -1,7 +1,5 @@
 Переписать полностью
 
-https://docs.yandex-team.ru/ya-make/general/how_it_works#content_uids
-
 Как строится и исполняется сборочный граф
 Команда ya make сейчас работает так:
 
