@@ -127,23 +127,23 @@
 **Пример**
 ```
 "build": {
-         "build_1": {
-            "targets": [
-                "devtools/project/hello_world"
-            ],
-            "flags": [
-                {
-                    "name": "CFLAGS",
-                    "value": "-DMYFLAG"
-                }
-            ]
-        },
-        "build_2": {
-            "targets": [
-                "devtools/project/hello_world"
-            ]
-        }
+    "build_1": {
+        "targets": [
+            "devtools/project/hello_world"
+        ],
+        "flags": [
+            {
+                "name": "CFLAGS",
+                "value": "-DMYFLAG"
+            }
+        ]
+    },
+    "build_2": {
+        "targets": [
+            "devtools/project/hello_world"
+        ]
     }
+}
 ```
 Далее ключи (`build_1` или `build_2`) необходимо использовать в разделе `data` в элементах `BUILD_OUTPUT`.
 
@@ -155,28 +155,28 @@
 **Пример**
 ```
 "flags": [
-            {
-                "name": "NO_STRIP",
-                "value": "yes"
-            }
-        ]
+    {
+        "name": "NO_STRIP",
+        "value": "yes"
+    }
+]
 ```
 
 #### Custom version 
 С помощью параметра `--custom-version=<str>` можно задать шаблон версии пакета. Он имеет более высокий приоритет, чем версия, указанная в файле описания. Пользовательская версия может быть встроена в собираемые программы в `ya package`. Чтобы получить строку с пользовательской версией, используйте функцию `GetCustomVersion()` из `library/cpp/svnversion/svnversion.h` для `C++`, и поле `Info.CustomVersion` для `Go`
 
-Любая информация о версиях, встроенная в программы, по умолчанию не обновляется при сборке. Такое поведение желательно для ускорения процесса сборки и тестирования пакетов. Чтобы принудительно обновить информацию о версии, используйте флаг `-DFORCE_VCS_INFO_UPDATE=yes` (параметр `force_vcs_info_update` для задачи `YA_PACKAGE_2`).” 
+Любая информация о версиях, встроенная в программы, по умолчанию не обновляется при сборке. Такое поведение желательно для ускорения процесса сборки и тестирования пакетов. Чтобы принудительно обновить информацию о версии, используйте флаг `-DFORCE_VCS_INFO_UPDATE=yes`.
 
 Также пользовательскую ('custom') версию можно передать в сборку (не рекомендуется):
 
 **Пример**
 ```
 "flags": [
-            {
-                "name": "PACKAGE_VERSION",
-                "value": "{package_version}"
-            }
-        ]
+    {
+        "name": "PACKAGE_VERSION",
+        "value": "{package_version}"
+    }
+]
 ```
 
 ### data 
@@ -445,8 +445,8 @@ wheel_python3 | bool | `--wheel-python3` | Использовать python3 дл
 Этот раздел позволяет описать действия, которые необходимо выполнить после основной работы `ya package` над директорией с результатами. Он состоит из списка команд (`source`), а также аргументов к ним (`arguments`). Также можно переопределить текущую рабочую директорию, если она отличается от директории с результатами (`cwd`), и задать переменные окружения (`env`) в формате ключ — значение.
 
 Источники команд могут быть следующими:
-#### BUILD_OUTPUT
-Бинарный файл, собранный из репозитория (должен быть указан в секции `build`). Например:
+#### BUILD_OUTPUT / TEMP
+Запускает бинарный файл, собранный из репозитория (должен быть указан в секции `build`), с указанными аргументами. Например:
 ```
 {
     "source": {
@@ -463,21 +463,6 @@ wheel_python3 | bool | `--wheel-python3` | Использовать python3 дл
         "--framework-version", "0",
         "--header-prefixes", "YRT", "YMA", "YDS",
         "--modulemap-exclude-prefixes", "YMA"
-    ]
-}
-```
-
-#### BUILD_ROOT 
-Файл из репозитория (должен быть запускаемым файлом)
-```
-{
-    "source": {
-        "type": "BUILD_ROOT",
-        "path": "market/mbi/push-api/push-api/src/main/script/copy_file.sh"
-    },
-    "arguments": [
-        "../resources/application.properties",
-        "/{package_name}/properties.d/00-application.properties"
     ]
 }
 ```
