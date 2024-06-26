@@ -26,19 +26,6 @@ $ ./ya analyze-make timeline
 Open about://tracing in Chromium and load 14-27-47.ndpzv5xlrled702w.evlog.json file.
 ```
 
-### Анализ сборок из задач 
-
-При анализе задач в больших тестах, таких как `LARGE`, `YA_MAKE_2`, `YA_PACKAGE_2` и их производных, часто требуются `event` логи:
-
-1. В описании задач должны быть ссылки на необходимые `event` логи, например: `evlog_1.json`.
-2. Скачайте файл с `event` логом.
-3. Постройте профиль сборки с помощью команды:
-
-```
-ya analyze-make timeline --evlog <path_to_evlog.json>
-```
-`<path_to_evlog.json>` — путь до загруженного файла с `event` логом.
-
 ### Опции
 
 ```
