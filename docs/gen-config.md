@@ -24,7 +24,7 @@
 
 - Для опций без параметров следует указывать true в качестве значения.
 
-- Для опций, представляющих собой “словари” (например, `flags`), необходимо открыть соответствующую секцию (таблицу). В этой секции указываются записи в формате `key = "value"`.
+- Для опций, представляющих собой "словари" (например, `flags`), необходимо открыть соответствующую секцию (таблицу). В этой секции указываются записи в формате `key = "value"`.
 
 ## Пример ya.conf 
 ```
@@ -536,23 +536,23 @@
 
 ### Глобальные настройки и локальные переопределения
 ```
-project_output = “/default/path”
+project_output = "/default/path"
 
 [ide.qt]
-project_output = “/path/to/qt/project”
+project_output = "/path/to/qt/project"
 
 [ide.msvs]
-project_output = “c:\path\to\msvs\project”
+project_output = "c:\path\to\msvs\project"
 ```
 В приведенном примере задается общий путь до проекта как `"/default/path"`, однако для команд `ya ide qt` и `ya ide msvs` устанавливаются специализированные пути.
 
 ### Переопределение словарных опций
 ```
 [flags]
-NO_DEBUGINFO = “yes”
+NO_DEBUGINFO = "yes"
 
 [dump.json-test-list.flags]
-MY_SPECIAL_FLAG = “yes”
+MY_SPECIAL_FLAG = "yes"
 ```
 Здесь для большинства сценариев используется флаг `NO_DEBUGINFO="yes"`, но для команды `ya dump json-test-list` задается дополнительный флаг `MY_SPECIAL_FLAG="yes"`, в то время как `NO_DEBUGINFO` не применяется.
 
@@ -580,8 +580,8 @@ warn = "yellow"
 ### Пример конфигурационного файла:
 ```
 [terminal_profile]
-bad = “light-red”
-unimp = “default”
+bad = "light-red"
+unimp = "default"
 ```
 В примере выше, цвет для маркера `bad` изменен на `light-red` (светло-красный), а для `unimp` используется цвет по умолчанию.
 
@@ -616,8 +616,8 @@ ya make path/to/project --replace-result --add-result=.go --no-output-for=.cgo1.
 ```
 # path_proect/<username>/ya.make.conf
 replace_result = true  # --replace-result
-add_result_extend = [“.go”]  # --add-result=.go
-suppress_outputs = [“.cgo1”, “.res.go”, “_cgo_gotypes.go”]  # --no-output-for options
+add_result_extend = [".go"]  # --add-result=.go
+suppress_outputs = [".cgo1", ".res.go", "_cgo_gotypes.go"]  # --no-output-for options
 ```
 ##### Создание alias-а в ya.conf:
 
@@ -626,12 +626,12 @@ suppress_outputs = [“.cgo1”, “.res.go”, “_cgo_gotypes.go”]  # --no-o
 
 [[alias]]
 replace_result = true
-add_result_extend = [“.go”]
-suppress_outputs = [“.cgo1”, “.res.go”, “_cgo_gotypes.go”]
+add_result_extend = [".go"]
+suppress_outputs = [".cgo1", ".res.go", "_cgo_gotypes.go"]
 
 [alias._settings.arg]
-names = [“–add-go-result”]
-help = “Add generated .go files”
+names = ["–add-go-result"]
+help = "Add generated .go files"
 visible = true
 ```
 Такой alias позволяет заменить длинную команду на:
@@ -646,30 +646,30 @@ visible = true
 Описание желаемого поведения пропишем в `ya.conf`:
 ```
 [host_platform_flags]
-USE_PREBUILT_TOOLS = “no”
+USE_PREBUILT_TOOLS = "no"
 
 [flags]
-USE_PREBUILT_TOOLS = “no”
+USE_PREBUILT_TOOLS = "no"
 ```
 Теперь опишем alias, который будет включаться по аргументу, переменной окружения или выставлением значения в любом `ya.conf`:
 ```
 [[alias]]
 [alias.host_platform_flags]
-USE_PREBUILT_TOOLS = “no”
+USE_PREBUILT_TOOLS = "no"
 
 [alias.flags]
-USE_PREBUILT_TOOLS = “no”
+USE_PREBUILT_TOOLS = "no"
 
 [alias._settings.arg]
-names = [“-p”, “–disable-prebuild-tools”]
-help = “Disable prebuild tools”
+names = ["-p", "–disable-prebuild-tools"]
+help = "Disable prebuild tools"
 visible = true
 
 [alias._settings.env]
-name = “YA_DISABLE_PREBUILD_TOOLS”
+name = "YA_DISABLE_PREBUILD_TOOLS"
 
 [alias._settings.conf]
-name = “disable_prebuild_tools”
+name = "disable_prebuild_tools"
 ```
 Теперь для активации поведения можно использовать один из следующих способов:
 ```
@@ -680,7 +680,7 @@ name = “disable_prebuild_tools”
 # Переменная окружения:
   `YA_DISABLE_PREBUILD_TOOLS=yes ya make path/to/project`
 # Значение в конфиге:
-  echo “\ndisable_prebuild_tools=true\n” >> path_proect/$USER/ya.conf
+  echo "\ndisable_prebuild_tools=true\n" >> path_proect/$USER/ya.conf
   ya make path/to/project
 ```
 ## Работа с несколькими Alias-ами
