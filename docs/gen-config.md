@@ -1,8 +1,8 @@
-# ya gen-config
+## ya gen-config
 
 Команда `ya gen-config` используется для генерации конфигурационного файла инструмента `ya`. Это позволяет пользователю создать стандартный (базовый) конфигурационный файл, содержащий описание и закомментированные значения по умолчанию для различных настроек. Пользователь может затем настроить файл конфигурации в соответствии со своими требованиями.
 
-## Использование
+### Использование
 
 `ya gen-config [OPTION]… [ya.conf]…`
 
@@ -18,7 +18,7 @@
 
 - `-h`, `--help` - Показать справку по использованию команды. Используйте `-hh` для вывода дополнительных опций и `-hhh` для ещё более расширенной помощи.
 
-## Формат `ya.conf`
+### Формат `ya.conf`
 
 Файл `ya.conf` должен быть в формате [toml](https://github.com/toml-lang/toml). Вот основные правила для работы с конфигурационным файлом:
 
@@ -164,14 +164,6 @@
 #
 # Deploy local files via sync server instead of file watchers (--use-sync-server)
 # use_sync_server = false
-#
-# ========== Integration wuth IDE plugin ======================================
-#
-# Type of a project to use in `ya project update` upon regernation from Idea (--project-update-kind)
-# project_update_kind = "None"
-#
-# Run `ya project update` for this dirs upon regeneration from Idea (--project-update-targets)
-# project_update_targets = []
 #
 # ========== Ya operation control =============================================
 #
@@ -448,28 +440,6 @@
 #
 # Disable docker cache (--docker-no-cache)
 # docker_no_cache = false
-#
-# ========== Advanced =========================================================
-#
-# Hide MacOS arm64 host warning (--hide-arm64-host-warning)
-# hide_arm64_host_warning = false
-#
-# ========== For Ya developers ================================================
-#
-# Clear ymake cache (-xx)
-# clear_ymake_cache = false
-#
-# Do not remove temporary data incrementally (--incremental-build-dirs-cleanup)
-# incremental_build_dirs_cleanup = false
-#
-# Cache TTL in seconds
-# new_store_ttl = 259200
-#
-# Use cache for json-graph in ymake (-xs)
-# use_json_cache = true
-#
-# Validate build root content by cached hash in content_uids mode (--validate-build-root-content)
-# validate_build_root_content = false
 #
 # ========== Authorization ====================================================
 #
