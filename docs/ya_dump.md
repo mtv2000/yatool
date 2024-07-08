@@ -152,7 +152,6 @@ Directory (Include): $S/contrib/libs/linux-headers
 ```bash
 ~/yatool/devtools/ymake/bin$ ya dump all-relations --to contrib/libs/libiconv | dot -Tpng > graph.png
 ```
-![graph](../assets/all-relations-graph1.png "Граф зависимостей" =558x536)
 
 С помощью опции `--from` можно поменять начальную цель:
 
@@ -283,22 +282,20 @@ Directory (Include): $S/contrib/libs/linux-headers
 
 ### ya dump debug
 
-Собирает отладочную информацию о последнем запуске `ya make` и загружает её на sandbox
+Собирает отладочную информацию о последнем запуске `ya make`. При локальной работе используется с опцией `--dry-run`.
 
-Команда: `ya dump debug [last|N] [OPTION]`
+Команда: `ya dump debug [last|N] --dry-run`
 
-`ya dump debug` — посмотреть все доступные для загрузки bundle
-`ya dump debug last --dry-run` — cобрать bundle от последнего запуска `ya make`, но не загружать его на sandbox
-`ya dump debug 2` — cобрать **пред**последний bundle и загрузить его на sandbox
-`ya dump debug 1` — cобрать последний bundle и загрузить его на sandbox
+`ya dump debug --dry-run` — посмотреть все доступные для загрузки bundle
+`ya dump debug last --dry-run` — cобрать bundle от последнего запуска `ya make`.
+`ya dump debug 2 --dry-run` — cобрать **пред**последний bundle.
+`ya dump debug 1 --dry-run` — cобрать последний bundle.
 
-Опции:
-* `--dry-run` — собрать отладочный bundle от последнего запуска, но не загружать его на sandbox
 
 **Пример:**
 ```bash
 ┬─[user@linux:~/a/yatool]─[11:50:28]
-╰─>$ ./ya dump debug
+╰─>$ ./ya dump debug --dry-run
 
 10: `ya-bin make -r /Users/yatool/devtools/ya/bin -o /Users/build/ya --use-clonefile`: 2021-06-17 20:16:24 (v1)
 9: `ya-bin make devtools/dummy_yatool/hello_world/ --stat`: 2021-06-17 20:17:06 (v1)
@@ -317,7 +314,7 @@ Directory (Include): $S/contrib/libs/linux-headers
 
 Чтобы просмотреть список всех доступных опций для конкретной подкоманды утилиты `ya dump`, можно использовать параметр `--help` сразу после указания интересующей подкоманды.
 
-Это выведет [подробную справку по опциям](yadump_comdopt.md) и их использованию для выбранной подкоманды.
+Это выведет подробную справку по опциям и их использованию для выбранной подкоманды.
 
 Пример команды для просмотра опций:
 ```bash
