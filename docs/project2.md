@@ -5,11 +5,10 @@
 `ya project <subcommand>`
 
 ### Команды
-```
- create            Create project
- fix-peerdirs      Add missing and delete unused peerdirs to the project
- macro             Add or delete macro in ya.make
-```
+ * `create` - [Создает новый проект.](#create)
+ * `update` - [Обновление типового проекта.](#update)
+ * `fix-peerdirs` - [Добавляет недостающие и удаляет неиспользуемые `peerdirs` в проекте].
+ * `macro` - [Добавляет или удаляет макрос в файле `ya.make`].
 
 ### create
 
@@ -38,12 +37,10 @@ recurse | Создать `ya.make` для сборки вложенных цел
 
 Большинство встроенных проектов поддерживают следующие опции:
 
-```
--h, --help        справка по опциям для конкретного проекта
---set-owner       установить владельцем пользователя или группу
---rewrite         перезаписать ya.make
--r, --recursive   создать проекты рекурсивно по дереву директорий
-```
+* `-h`, `--help` - справка по опциям для конкретного проекта
+* `--set-owner` - установить владельцем пользователя или группу
+* `--rewrite` - перезаписать ya.make
+* `-r`, `--recursive` - создать проекты рекурсивно по дереву директорий
 
 Команда `ya project create` поддерживает расширяемую генерацию проектов по шаблонам, что позволяет пользователям создавать проекты с использованием собственных шаблонов.
 
@@ -57,7 +54,7 @@ recurse | Создать `ya.make` для сборки вложенных цел
 
 #### Доступные шаблонные проекты
 
-На момент написания этой документации были доступны следующие шаблонные проекты:
+На момент написания документации доступны следующие шаблонные проекты:
 
 | Имя | Описание |
 | ---------------- | -------------------------------------------- |
@@ -70,12 +67,12 @@ recurse | Создать `ya.make` для сборки вложенных цел
 
 #### Генерация проекта по шаблону
 
-Генерация проекта по шаблону не слишком отличается от генерации встроенных проектов, есть лишь небольшое отличие в работе с опциями. Количество общих опций сведено до минимума, из общих опций поддержана только `--set-owner`. Однако, шаблоны могут поддерживать свои опции.
+Генерация проекта по шаблону не слишком отличается от генерации встроенных проектов, есть лишь небольшое отличие в работе с опциями. Шаблоны могут поддерживать свои опции.
 
 При указании целевой директории шаблонные опции необходимо писать строго после неё. Если опция шаблона совпадает со встроенной, то передать в шаблон опцию можно после `--`.
 
   **Пример**
-  ```
+  ```bash
   ya project create docs --help
   Create docs project
 
@@ -90,7 +87,8 @@ recurse | Создать `ya.make` для сборки вложенных цел
                           Set owner of project(default owner is current user)
       --rewrite           Rewrite existing ya.make
   ```
-  ```
+  **При совпадении опции**
+  ```bash
   ya project create docs -- --help 
   usage: Docs project generator [-h] [--name NAME]
 
@@ -108,14 +106,14 @@ recurse | Создать `ya.make` для сборки вложенных цел
 
 Выглядит это примерно так:
 
-```
+```bash
 /devtools/ya/handlers/project/templates
 mkdir my_project
 ya project create project_template
 ```
 
 Получится следующая структура директорий:
-```
+```bash
 devtools/ya/handlers/project/templates/my_project
 ├── template
 │   └── place-your-files-here
@@ -125,7 +123,7 @@ devtools/ya/handlers/project/templates/my_project
 
 `template.py` будет содержать заготовки для двух функций:
 
-```
+```python
 def get_params(context):
     """
     Calculate all template parameters here and return them as dictionary.
@@ -144,16 +142,15 @@ def postprocess(context, env):
 
 В функции `get_params` нужно получить данные, необходимые для создания шаблона проекта и сформировать словарь `env`, который будет использоваться для подстановки в [jinja](https://ru.wikipedia.org/wiki/Jinja)-шаблоны и передан в `prostprocess`. Параметры можно получить из переданного контекста (параметр `context`), разбором опций, переданных в контексте или интерактивным запросом у пользователя.
 
-Параметр `context` — это `namedtuple` типа `Context` из `template_tools.common`. В нём доступно 5 свойств:
+Параметр `context` — это `namedtuple` типа `Context` из `template_tools.common`. В нём доступно четыре свойства:
 * **`path`** - относительный путь от корня репозитория до создаваемого проекта
 * **`root`** - абсолютный путь корня репозитория
-* **`owner`** - значение, переданное параметром `--set-owner`
 * **`args`** - список неразобранных аргументов, переданных в конце вызова `ya project create <project_name> [path] [args]`
 * **`backup`** - объект из `template_tools.common`, позволяющий сохранять оригинальные файлы перед их редактированием. Файлы будут восстановленый в случае исключений во время геренерации проекта, а также будут сохранены в `~/.ya/tmp` на случай если что-то пойдёт не так (сохраняются файлы от последних 5 сейссий).
 
 Код для `get_params` может выглядеть, например так:
 
-```
+```python
 python
 from __future__ import absolute_import
 from __future__ import print_function
@@ -185,8 +182,6 @@ def get_params(context):
 **ya.make**
 
 ```yamake
-OWNER(not_var{{user}})
-
 PROGRAM(not_var{{project_name}})
 
 SRCS(
@@ -198,7 +193,7 @@ END()
 
 **main.cpp**
 
-```
+```с++
 #include <util/stream/output.h>
 
 int main() {
@@ -213,7 +208,7 @@ int main() {
 
 **.ya_project.default**
 
-```
+```ya_project.default
 name: not_var{{__PROJECT_TYPE__}}
 ```
 
@@ -223,7 +218,7 @@ name: not_var{{__PROJECT_TYPE__}}
 
 После генерации проекта будет вызвана функция `postprocess`. В этой функции можно выполнить окончательные доработки, внести изменения или вывести сообщения. Например, с помощью вызова `add_recurse(context)` из модуля `template_tools.common` можно добавить новый проект в родительскую директорию.
 
-```
+```python
 python
 def postprocess(context, env):
     """
@@ -245,7 +240,7 @@ def postprocess(context, env):
 
 Надо добавить в этот файл примерно следующее:
 
-```
+```templates.yaml
 yaml
 - name: my_project                   # Имя типа проекта, которое надо указывать в команде 
   description: Create test project   # Описание для ya project create --help
@@ -277,28 +272,27 @@ Available subcommands:
 
 Для проверки создадим `ya.make` в родительской директории:
 
-```
+```bash
 cat project/user/tst/ya.make
-OWNER(user)
 ```
 
 Запускаем:
 
-```
+```bash
 ya project create my_project project/user/tst/myprj 
 Generating sample project
 You are get to go. Build your project and have fun:)
 ```
 
 Собираем через родительский `ya.make` и запускаем:
-```
+```bash
 ya make project/user/tst
 project/user/tst/myprj/myprj
 Hello from user!
 ```
 
 **Структура директорий:**
-```
+```bash
 project/user/tst
 ├── myprj
 │   ├── main.cpp
@@ -311,16 +305,14 @@ project/user/tst
 
 `project/user/tst/ya.make`
 
-```
-OWNER(user)
-
+```ya.make
 RECURSE(
     myprj
 )
 ```
 `project/user/tst/myprj/ya.make`
-```
-OWNER(user)
+
+```ya.make
 
 PROGRAM(myprj)
 
@@ -331,7 +323,8 @@ SRCS(
 END()
 ```
 `project/user/tst/myprj/main.cpp`
-```
+
+```c++
 #include <util/stream/output.h>
 
 int main() {
@@ -353,10 +346,6 @@ int main() {
 
 - Чтобы добавить в проект файл `x.template`, положите для него шаблон с именем `x.template.template`.
 - Чтобы добавить в проект файл `x.notemplate`, положите для него шаблон с именем `x.notemplate.template`.
-
-Команду ya project create крайне желательно запускать в пустой директории. При правильной работе она не станет перезаписывать существующие файлы и просто сломается, но никто не застрахован от ошибок в коде.
-
-#### Важные замечания
 
 Рекомендуется запускать команду `ya project create` в пустой директории. Хотя команда обычно не перезаписывает существующие файлы и завершится с ошибкой, это поведение не гарантирует защиту от возможных ошибок в коде. 
 
@@ -400,7 +389,7 @@ int main() {
 Если тип проекта не указан, `ya project update` попробует найти файл с именем `.ya_project.default`. Это файл в формате `yaml`, в котором команда будет искать ключ `name`. Значение этого ключа будет использовано как тип проекта. Такой файл может создавать команда `ya project create`.
 
 **Примеры использования**
-```
+```bash
 project/user/libX
 ├── bin
 │   ├── __main__.py
@@ -418,20 +407,17 @@ project/user/libX
 
 Предположим, что в двух файлах не хватает `RECURSE`.
 
-`project/user/libX/ya.make`
+1. `project/user/libX/ya.make`
 
-```
-OWNER(user)
+```ya.make
 
 RECURSE(
     bin
 )
 ```
 
-`project/user/libX/lib/ya.make`
-```
-OWNER(user)
-
+2. `project/user/libX/lib/ya.make`
+```ya.make
 PY3_LIBRARY()
 
 PY_SRCS(app.py)
@@ -439,10 +425,9 @@ PY_SRCS(app.py)
 END()
 ```
 При запуске
+```bash
+ya project update recurse project/user/libX  --recursive
 
-`ya project update recurse project/user/libX  --recursive`
-
-```
 Warn: No suitable directories in project/user/libX/dummy
 Info: project/user/libX/lib/ya.make, RECURSE was updated
 Info: project/user/libX/ya.make, RECURSE was updated
@@ -450,9 +435,8 @@ Info: project/user/libX/ya.make, RECURSE was updated
 
 При проверке:
 
-`project/user/libX/ya.make` (заметим, что `RECURSE` на `dummy` не нужен, там нет `ya.make`)
-```
-OWNER(user)
+1. `project/user/libX/ya.make` (заметим, что `RECURSE` на `dummy` не нужен, там нет `ya.make`)
+```ya.make
 
 RECURSE(
     bin
@@ -460,10 +444,8 @@ RECURSE(
 )
 ```
 
-`project/user/libX/lib/ya.make`
-```
-OWNER(user)
-
+2. `project/user/libX/lib/ya.make`
+```ya.make
 PY3_LIBRARY()
 
 PY_SRCS(app.py)
@@ -477,12 +459,12 @@ RECURSE(
 #### Обновление по шаблону
 
 Помимо описанных выше встроенных типов проектов, команда `ya project update` поддерживает расширение функциональности за счет использования шаблонов. Шаблоны проектов хранятся в репозитории и загружаются непосредственно во время выполнения команды. Полный список доступных типов проектов, включая как встроенные, так и шаблонные, можно получить с помощью команды:
-
-`ya project update --help`
-
+```bash
+ya project update --help
+```
 #### Доступные шаблонные проекты
 
-На момент написания этой документации для обновления доступны следующие шаблонные проекты:
+На момент написания документации для обновления доступны следующие шаблонные проекты:
 
 | Имя | Описание |
 |:---|:---|
@@ -500,9 +482,7 @@ RECURSE(
 
 Для примера, обновление проектов для Python поддерживает следующие опции:
 
-`project update py_quick – --help`
-
-```
+```bash
 project update py_quick -- --help
 usage: Python project updater [-h] [--recursive]
 
@@ -530,7 +510,7 @@ optional arguments:
 
 Для регистрации шаблона обновления необходимо указать путь в секции `update` файла конфигурации `yaml`. Пример конфигурации:
 
-```
+```yaml
   - name: my_project                   # Имя типа проекта, которое надо указывать в команде 
     description: Create test project   # Описание для ya project create --help
     create:                            # Шаблон для `ya project create`
@@ -545,9 +525,7 @@ optional arguments:
 
 Добавить отсутствующие и удалить лишние записи `PEERDIR` в проекте. Необходимость записей определяется анализом зависимостей исходных файлов проекта.
 
-```
-ya project fix-peerdirs [OPTION]... [TARGET]...
-```
+Синтаксис `ya project fix-peerdirs [OPTION]... [TARGET]...`
 
 #### Опции
 ```
@@ -578,7 +556,7 @@ ya project fix-peerdirs [OPTION]... [TARGET]...
 
 **Примеры**
 
-```
+```bash
   ya project macro add "MACRO_NAME(VALUE1 VALUE2 ...)"                               Вставить макрос MACRO_NAME в начало списка макросов
   ya project macro add --set_after=AFTER_MACRO_NAME "MACRO_NAME(VALUE1 VALUE2 ...)"  Вставить макрос MACRO_NAME после AFTER_MACRO_NAME в начало списка макросов
 ```
@@ -588,67 +566,3 @@ ya project fix-peerdirs [OPTION]... [TARGET]...
 `ya project macro remove <macro_name>`
 
 - `<macro_name>`: Имя макроса, который необходимо удалить.
-
-### owner
-
-Работа с владельцами в `ya.make`.
-```
-ya project owner [<subcommand>] [OPTION]... [TARGET]...
-```
-#### Доступные команды
-
-| Подкоманда | Описание |
-|:---|:---|
-| <без команды> | Показать владельцев для проекта |
-| `add <owners>` | Добавить владельцев в проект.|
-| `check_logins` | Проверить актуальность владельцев. |
-| `optimize` | Оптимизировать список владельцев, удаляя пользователей, если они уже принадлежат группе владельцев. |
-| `remove <owners>` | Удалить владельцев из `ya.make`. |
-| `replace <old^new>` | Заменить старого владельца на нового. |
-| `set <owners>` | Назначить указанных владельцев `<owners>`. Все прежние владельцы будут удалены. |
-
-#### Примечания к подкомандам
-
-- <без команды>: Показывает текущих владельцев для проекта, если никаких дополнительных аргументов не указано.
-- `check_logins`: Проверяет, актуальны ли владельцы.
-- `remove <owners>`: Удаляет указанных владельцев из `ya.make`. Если не осталось владельцев, назначает владельца, указанного в опции `--default-owner=<owner>`.
-
-**Пример:**
-
-Первоначальный вид файла `ya.make`
-```
-LIBRARY()
-
-OWNER(g:group)
-
-SRCS(
-    a.cpp
-)
-END()
-```
-
-`ya project owners set user` - Назначить владельца проекта *"user"*
-
-```
-LIBRARY()
-
-OWNER(user)
-
-SRCS(
-    a.cpp
-)
-END()
-```
-
-`ya project owners replace user^g:users` - Заменить владельца *"user"* на группу пользователей *"users"*
-
-```
-LIBRARY()
-
-OWNER(g:users)
-
-SRCS(
-    a.cpp
-)
-END()
-```
