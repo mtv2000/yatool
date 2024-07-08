@@ -7,8 +7,8 @@
 ### Команды
  * `create` - [Создает новый проект.](#create)
  * `update` - [Обновление типового проекта.](#update)
- * `fix-peerdirs` - [Добавляет недостающие и удаляет неиспользуемые `peerdirs` в проекте].
- * `macro` - [Добавляет или удаляет макрос в файле `ya.make`].
+ * `fix-peerdirs` - [Добавляет недостающие и удаляет неиспользуемые `peerdirs` в проекте](#fix-peerdirs).
+ * `macro` - [Добавляет или удаляет макрос в файле `ya.make`](#macro).
 
 ### create
 
@@ -324,7 +324,7 @@ END()
 ```
 `project/user/tst/myprj/main.cpp`
 
-```c++
+```cpp
 #include <util/stream/output.h>
 
 int main() {
