@@ -13,7 +13,7 @@
 - Команда `ya analyze-make timeline` строит трейс (trace) на основе этих логов для дальнейшего анализа.
 
 2. Форматы выходных данных:
-- По умолчанию, `ya analyze-make timeline` генерирует трейсы, которые могут быть отображены в браузерах Яндекс Браузер (через `browser://tracing`) и Chrome (через `chrome://tracing/`).
+- По умолчанию, `ya analyze-make timeline` генерирует трейсы, которые могут быть отображены в браузерах `Яндекс Браузер` (через `browser://tracing`) и `Chrome` (через `chrome://tracing/`).
 - Дополнительно поддерживается формат, совместимый с библиотекой `matplotlib` для визуализации.
 
 3. Выбор файла для анализа:
@@ -21,16 +21,15 @@
 - При необходимости, можно явно указать файл для анализа с помощью опции `--evlog`.
 
 **Пример**
-```
+```bash
 $ ./ya analyze-make timeline
 Open about://tracing in Chromium and load 14-27-47.ndpzv5xlrled702w.evlog.json file.
 ```
 
 ### Опции
 
-```
---evlog=ANALYZE_EVLOG_FILE   Анализировать лог из файла
---format=OUTPUT_FORMAT       Формат вывода, по умолчанию chromium_trace 
---plot                       Формат вывода plot (matplotlib)
--h, --help                   Справка
-```
+* `--evlog=ANALYZE_EVLOG_FILE` - Анализировать лог из файла
+* `--format=OUTPUT_FORMAT` - Формат вывода, по умолчанию chromium_trace 
+* `--plot` - Формат вывода plot (matplotlib)
+* `-h`, `--help` - Справка
+
