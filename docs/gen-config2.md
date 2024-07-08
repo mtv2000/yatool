@@ -272,7 +272,7 @@
 ### Примеры опций для конкретных команд `ya`
 
 #### Глобальные настройки и локальные переопределения
-```
+```bash
 project_output = "/default/path"
 
 [ide.qt]
@@ -284,7 +284,7 @@ project_output = "c:\path\to\msvs\project"
 В приведенном примере задается общий путь до проекта как `"/default/path"`, однако для команд `ya ide qt` и `ya ide msvs` устанавливаются специализированные пути.
 
 #### Переопределение словарных опций
-```
+```bash
 [flags]
 NO_DEBUGINFO = "yes"
 
@@ -301,7 +301,7 @@ MY_SPECIAL_FLAG = "yes"
 
 `ya` использует систему маркировки текста с применением переменных окружения для управления цветовой схемой в терминале. Это позволяет пользователям менять настройки цветового отображения различных элементов терминала для улучшения читаемости и визуального восприятия.
 
-```
+```bash
 alt1 = "cyan"
 alt2 = "magenta"
 alt3 = "light-blue"
@@ -315,7 +315,7 @@ warn = "yellow"
 Для изменения цветов, связанных с этими маркерами, можно использовать секцию `terminal_profile` в конфигурационном файле `ya.conf`. Это позволяет задать пользовательские цвета для каждого из маркеров.
 
 **Пример конфигурационного файла**
-```
+```bash
 [terminal_profile]
 bad = "light-red"
 unimp = "default"
@@ -323,7 +323,7 @@ unimp = "default"
 В примере выше, цвет для маркера `bad` изменен на `light-red` (светло-красный), а для `unimp` используется цвет по умолчанию.
 
 Чтобы добавить интересующие целевые платформы, достаточно несколько раз описать следующую конструкцию:
-```
+```bash
 [[target_platform]]
 platform_name = "default-darwin-arm64"
 build_type = "relwithdebinfo"
@@ -375,11 +375,11 @@ visible = true
 ##### Отключение предпостроенных тулов
 
 Для отключения использования предпостроенных тулов в обычном режиме нужны следующие аргументы:
-
-`ya make path/to/project -DUSE_PREBUILT_TOOLS=no --host-platform-flag=USE_PREBUILT_TOOLS=no`
-
-Описание желаемого поведения пропишем в `ya.conf`:
+```bash
+ya make path/to/project -DUSE_PREBUILT_TOOLS=no --host-platform-flag=USE_PREBUILT_TOOLS=no`
 ```
+Описание желаемого поведения пропишем в `ya.conf`:
+```bash
 [host_platform_flags]
 USE_PREBUILT_TOOLS = "no"
 
@@ -387,7 +387,7 @@ USE_PREBUILT_TOOLS = "no"
 USE_PREBUILT_TOOLS = "no"
 ```
 Теперь опишем alias, который будет включаться по аргументу, переменной окружения или выставлением значения в любом `ya.conf`:
-```
+```bash
 [[alias]]
 [alias.host_platform_flags]
 USE_PREBUILT_TOOLS = "no"
@@ -458,7 +458,7 @@ first_alias = true
 В этом примере, конфигурации alias-ов из двух разных файлов будут успешно применены и не повлияют друг на друга отрицательно.
 
 #### Пример с использованием target_platform
-```
+```bash
 [[alias]]
 
 [[alias.target_platform]]  # --target-platform
@@ -504,7 +504,7 @@ name = "my_cool_alias"
 
 Если возникла необходимость вынести общую часть из alias-ов, можно воспользоваться композицией.
 Пусть у нас есть два alias-а:
-```
+```bash
 [[alias]]
 first_value = 1
 second_value = 2
@@ -518,7 +518,7 @@ third_value = 3
 names = ["--second"]
 ```
 Чтобы вынести общую часть, нужно создать новый alias c параметром конфигурации:
-```
+```bash
 [[alias]]
 second_value = 2
 [[alias._settings.conf]]
