@@ -114,7 +114,7 @@ ya dump modules --help
 - [`ya dump json-test-list`](#ya-dump-json-test-list) – информация о тестах.
 - [`ya dump recipes`](#ya-dump-recipes) – информация о рецептах.
 - [`ya dump conf-docs`](#ya-dump-conf-docs) - документация по макросам и модулям.
-- [`ya dump debug`](#ya-dump-debug) — сборка отладочного bundle.
+- [`ya dump debug`](#ya-dump-debug) — сборка отладочного `bundle`.
 
 #### ya dump modules
 
