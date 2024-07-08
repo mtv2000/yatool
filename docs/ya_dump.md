@@ -7,7 +7,7 @@
 ### Синтаксис
 
 Общий формат команды выглядит следующим образом:
-```shell
+```bash
 ya dump <subcommand> [OPTION] [TARGET]
 ```
 Где:
@@ -17,8 +17,8 @@ ya dump <subcommand> [OPTION] [TARGET]
 - `[OPTION]` (необязательный) — это дополнительные флаги или ключи, которые модифицируют поведение выбранной подкоманды. Опции позволяют настроить вывод команды, уточнить, какие данные необходимо извлечь, или изменить формат вывода.
 - `[TARGET]` (необязательный) — это дополнительные параметры, необходимые для выполнения некоторых подкоманд, могут включать директорию, названия модулей или другие специфические данные, необходимые для выполнения команды.
 
-Вызов [справки](helpyadump.md) по всем доступным подкомандам:
-```
+Вызов справки по всем доступным подкомандам:
+```bash
 ya dump --help
 ```
 ### Анализ зависимостей
@@ -59,7 +59,7 @@ ya dump --help
 Команда: `ya dump modules [option]... [target]...`
 
 **Пример:**
-```
+```bash
 spreis@starship:~/yatool$ ./ya dump modules devtools/ymake | grep sky
 module: Library devtools/ya/yalibrary/yandex/skynet $B/devtools/ya/yalibrary/yandex/skynet/libpyyalibrary-yandex-skynet.a
 module: Library infra/skyboned/api $B/infra/skyboned/api/libpyinfra-skyboned-api.a
@@ -110,7 +110,7 @@ module: Library skynet/api/config $B/skynet/api/config/libpyskynet-api-config.a
 **Примеры:**
 
 Найти путь до директории `contrib/libs/libiconv`:
-```
+```bash
 ~/yatool/devtools/ymake$ ya dump relation contrib/libs/libiconv
 Directory (Start): $S/devtools/ymake ->
 Library (Include): $B/devtools/ymake/libdevtools-ymake.a ->
@@ -119,11 +119,10 @@ Library (Include): $B/library/cpp/xml/document/libcpp-xml-document.a ->
 Library (Include): $B/library/cpp/xml/init/libcpp-xml-init.a ->
 Library (Include): $B/contrib/libs/libxml/libcontrib-libs-libxml.a ->
 Directory (Include): $S/contrib/libs/libiconv
-
 ```
 
 Найти путь до произвольной файловой ноды из `contrib/libs`:
-```
+```bash
 ~/yatool/devtools/ymake$ ya dump relation contrib/libs --recursive
 Directory (Start): $S/devtools/ymake ->
 Library (Include): $B/devtools/ymake/libdevtools-ymake.a ->
@@ -150,14 +149,14 @@ Directory (Include): $S/contrib/libs/linux-headers
 
 **Пример:**
 
-```
+```bash
 ~/yatool/devtools/ymake/bin$ ya dump all-relations --to contrib/libs/libiconv | dot -Tpng > graph.png
 ```
 ![graph](../assets/all-relations-graph1.png "Граф зависимостей" =558x536)
 
 С помощью опции `--from` можно поменять начальную цель:
 
-```
+```bash
 ~/yatool/devtools/ymake/bin$ ya dump all-relations --from library/cpp/xml/document/libcpp-xml-document.a --to contrib/libs/libiconv | dot -Tpng > graph.png
 ```
 
@@ -165,13 +164,13 @@ Directory (Include): $S/contrib/libs/linux-headers
 
 С помощью опции `--json` можно изменить формат вывода:
 
-```
+```bash
 ~/yatool/devtools/ymake/bin$ ya dump all-relations --from library/cpp/xml/document/libcpp-xml-document.a --to contrib/libs/libiconv --json > graph.json
 ```
 
 С помощью опции `--recursive` можно вывести все зависимости до всех модулей из *target*-директории:
 
-```
+```bash
 ~/yatool/devtools/ymake/symbols$ ya dump all-relations --to library/cpp/on_disk --recursive | dot -Tpng > graph2.png
 ```
 
@@ -232,7 +231,7 @@ Directory (Include): $S/contrib/libs/linux-headers
 Поддержано большинство сборочных опций [`ya make`](yadump_compile.md)
 
 **Пример:**
-```
+```bash
 ~/yatool$ ya dump compilation-database devtools/ymake/bin
 ...
 {
@@ -297,7 +296,7 @@ Directory (Include): $S/contrib/libs/linux-headers
 * `--dry-run` — собрать отладочный bundle от последнего запуска, но не загружать его на sandbox
 
 **Пример:**
-```
+```bash
 ┬─[user@linux:~/a/yatool]─[11:50:28]
 ╰─>$ ./ya dump debug
 
@@ -321,13 +320,13 @@ Directory (Include): $S/contrib/libs/linux-headers
 Это выведет [подробную справку по опциям](yadump_comdopt.md) и их использованию для выбранной подкоманды.
 
 Пример команды для просмотра опций:
-```
+```bash
 ya dump <subcommand> --help
 ```
 Где <subcommand> нужно заменить на конкретное имя подкоманды, для которой вы хотите получить дополнительную информацию. 
 
 Например, если вы хотите узнать все доступные опции для подкоманды modules, команда будет выглядеть так:
-```
+```bash
 ya dump modules --help
 ```
 
