@@ -17,10 +17,64 @@ ya dump <subcommand> [OPTION] [TARGET]
 - `[OPTION]` (необязательный) — это дополнительные флаги или ключи, которые модифицируют поведение выбранной подкоманды. Опции позволяют настроить вывод команды, уточнить, какие данные необходимо извлечь, или изменить формат вывода.
 - `[TARGET]` (необязательный) — это дополнительные параметры, необходимые для выполнения некоторых подкоманд, могут включать директорию, названия модулей или другие специфические данные, необходимые для выполнения команды.
 
-Вызов справки:
+### Общие опции
+Актуальный список всех доступных команд можно посмотреть с помощью:
 ```bash
 ya dump --help
 ```
+
+Чтобы просмотреть список всех доступных опций для конкретной подкоманды утилиты `ya dump`, можно использовать параметр `--help` сразу после указания интересующей подкоманды.
+
+Это выведет подробную справку по опциям и их использованию для выбранной подкоманды.
+
+Например, если вы хотите узнать все доступные опции для подкоманды `modules`, команда будет выглядеть так:
+```bash
+ya dump modules --help
+```
+Опции команд `ya dump` во многом аналогичны опциям `ya make`, например:
+* `-xx` – перестроить граф полностью (не использовать кеши).
+* `-d`, `-r` – граф для отладочного или релизного режима сборки.
+* `-k` – игнорировать ошибки кофигурации.
+
+Опции для задания параметров сборки и платформ:
+
+- `-D=FLAGS` – Установить переменные сборки.
+- `--host-platform-flag=HOST_PLATFORM_FLAGS` – Флаг для хостовой платформы.
+- `--target-platform=TARGET_PLATFORMS` – Указать целевую платформу.
+- `--target-platform-flag=TARGET_PLATFORM_FLAG` – Установить флаги для целевой платформы.
+- `--build=BUILD_TYPE` – Тип сборки (по умолчанию release).
+- `--sanitize=SANITIZE` – Тип санитайзера.
+- `--race` – Сборка Go проектов с детектором гонок.
+
+Дополнительные опции для настройки сборочного процесса:
+
+- `--host-build-type=HOST_BUILD_TYPE` – Тип сборки для хостовой платформы.
+- `--host-platform=HOST_PLATFORM` – Хостовая платформа.
+- `--c-compiler=C_COMPILER` – Указать компилятор `C`.
+- `--cxx-compiler=CXX_COMPILER` – Указать компилятор `C++`.
+- `--lto` – Включить `Link Time Optimization` (`LTO`).
+- `--thinlt`o – Включить `ThinLTO`.
+- `--afl` – Использовать `American Fuzzy Lop` для фаззинга.
+- `--hardening` – Включить дополнительные более строгие проверки кода.
+- `--cuda=CUDA_PLATFORM` – Интеграция `NVIDIA CUDA`.
+- `--tools-cache-size=TOOLS_CACHE_SIZE` – Задание ограничения на размер кэша инструментов.
+
+Опции фильтрации:
+
+Эти опции используются для фильтрации и уточнения данных, которые должны быть извлечены или представлены в результате выполнения подкоманды и влияют на генерируемый сборочный граф:
+- `--force-build-depends` (или `-t`, или `-A`) – показывает зависимости. 
+- `--ignore-recurses`: Игнорирование `RECURSE` тегов в `ya.make` файлах.
+- `--no-tools`: Исключение зависимостей, связанных с инструментами сборки из вывода.
+- `--from=<module>`, `--to=<module>`: Указание начальной и конечной точки для отображения пути зависимостей. Опции `--from` и `--to` можно указывать по несколько раз.
+
+Опции форматирования:
+
+Предоставляют дополнительные возможности для настройки формата вывода результатов выполнения подкоманд.
+
+- `--json`: Вывод информации в формате JSON. Подходит, когда данные предполагается дальше обрабатывать программным путем.
+- `--flat-json`, `--flat-json-files` (для подкоманды dep-graph):  Форматирует вывод графа зависимостей в плоский JSON список, фокусируясь на файловых зависимостях или дугах графа. Граф зависимостей обычно содержит файловые ноды и ноды команд. Опция `--flat-json-files` позволяет вывести только файловые ноды и зависимости между ними.
+- `-q`, `--quiet` - ничего не выводить.
+
 ### Анализ зависимостей
 
 Управление зависимостями является одной из ключевых задач в процессе разработки проектов.   Правильное определение и анализ зависимостей позволяет обеспечивать корректную сборку проекта, избегая проблем, связанных с несовместимостями библиотек, повторяющимися зависимостями и другими распространёнными проблемами.
@@ -188,8 +242,16 @@ Directory (Include): $S/contrib/libs/linux-headers
 Выводит в формате `dot` все зависимости данного проекта. Это аналог `ya dump modules` c нарисованными зависимости между модулями.
 
 Команда: `ya dump dot-graph [OPTION]... [TARGET]...`
-
-
+``` bash
+ya dump dot-graph
+...
+"ydb/library/ydb_issue/proto/libpy3library-ydb_issue-proto.a" -> "contrib/python/grpcio/libpy3contrib-python-grpcio.a";
+    "ydb/library/ydb_issue/proto/libpy3library-ydb_issue-proto.a" -> "library/cpp/resource/liblibrary-cpp-resource.a";
+    "ydb/core/protos/libpy3ydb-core-protos.a" -> "ydb/core/tx/columnshard/engines/scheme/statistics/protos/libpy3scheme-statistics-protos.a";
+    "ydb/core/tx/columnshard/engines/scheme/statistics/protos/libpy3scheme-statistics-protos.a" -> "ydb/core/tx/columnshard/engines/scheme/statistics/protos/libscheme-statistics-protos.a";
+    "ydb/core/tx/columnshard/engines/scheme/statistics/protos/libpy3scheme-statistics-protos.a" -> "build/platform/python/ymake_python3/platform-python-ymake_python3.pkg.fake";
+...
+```
 ### ya dump dep-graph и json-dep-graph 
 
 Выводит граф зависимостей во внутреннем формате (с отступами) или в формате JSON соответственно.
@@ -211,7 +273,27 @@ Directory (Include): $S/contrib/libs/linux-headers
 `ya dump build-plan [OPTION]... [TARGET]...`
 
 Многие опции фильтрации не применимы к графу сборочных команд и поэтому не поддерживаются.
-
+```bash
+ya dump build-plan
+Traceback (most recent call last):
+  File "devtools/ya/app/__init__.py", line 733, in configure_exit_interceptor
+    yield
+  File "devtools/ya/app/__init__.py", line 107, in helper
+    return action(args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "devtools/ya/entry/entry.py", line 48, in do_main
+    res = handler.handle(handler, args, prefix=['ya'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "devtools/ya/core/yarg/handler.py", line 222, in handle
+    return handler.handle(self, args[1:], prefix + [name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "devtools/ya/core/yarg/dispatch.py", line 38, in handle
+    return self.command().handle(root_handler, args, prefix)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "devtools/ya/core/yarg/handler.py", line 222, in handle
+    return handler.handle(self, args[1:], prefix + [name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+```
 ### ya dump loops и peerdir-loops
 
 Команды выводят циклы по зависимостям между файлами или проектами.
@@ -334,25 +416,6 @@ Directory (Include): $S/contrib/libs/linux-headers
 2: `ya-bin make -r /Users/yatool/devtools/ya/bin -o /Users/build/ya --use-clonefile`: 2021-06-21 10:26:31 (v1)
 1: `ya-bin make -r /Users/yatool/devtools/ya/test/programs/test_tool/bin -o /Users/build/ya --use-clonefile`: 2021-06-21 10:36:21 (v1)
 ```
-### ya dump --help 
-
-Выводит список всех доступных команд - есть ещё ряд команд кроме описанных выше, но большинство из них используются внутри сборочной инфраструктуры и обычному пользователю мало интересны.
-
-Чтобы просмотреть список всех доступных опций для конкретной подкоманды утилиты `ya dump`, можно использовать параметр `--help` сразу после указания интересующей подкоманды.
-
-Это выведет подробную справку по опциям и их использованию для выбранной подкоманды.
-
-Пример команды для просмотра опций:
-```bash
-ya dump <subcommand> --help
-```
-Где <subcommand> нужно заменить на конкретное имя подкоманды, для которой вы хотите получить дополнительную информацию. 
-
-Например, если вы хотите узнать все доступные опции для подкоманды modules, команда будет выглядеть так:
-```bash
-ya dump modules --help
-```
-
 #### Дополнительные параметры 
 
 В контексте использования команды `ya dump` и её подкоманд, дополнительные параметры `[TARGET]` представляют собой специфические значения или данные, которые необходимо предоставить вместе с командой для её корректного выполнения. 
