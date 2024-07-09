@@ -21,6 +21,8 @@
 * `--cpp` для `C++`.
 * `--go` для `Go`.
 * `--yamake` для файлов `ya.make`
+* `--cuda` обрабатывать только файлы `cuda`
+* `--all` запустить все проверки: `py`, `cpp`, `go`, `yamake`, `cuda`
 
 ### Линтеры по языкам
 
@@ -30,6 +32,7 @@
 #### Python
 Команда поддерживает защиту блоков кода с помощью `# fmt: on/off`. 
 Для форматирования используется линтер `black`.
+Если вы предпочитаете стиль форматирования `Ruff`, используйте опцию `--ruff`, которая позволяет использовать форматирование с помощью инструмента `Ruff` вместо стандартного `black` для `Python`-файлов.
 
 #### Go
 В качестве линтера для `Go` используется утилита `yoimports`, поэтому при запуске `ya style` обновятся только `import`-ы.
@@ -52,23 +55,8 @@ ya style . --py    # обновить стиль всех python-файлов в
 
 `ya jstyle [OPTION]... [TARGET]...`
 
-Команда `ya jstyle` используется для форматирования Java-кода. 
+Команда `ya jstyle` используется для форматирования `Java`-кода и использует те же опции, что и `ya style`. 
 Базируется на форматтере `JetBrains IntelliJ IDEA`.
-
-#### Опции
-```bash
-  Bullet-proof options
-    -h, --help          Print help
-  Advanced options
-    --tools-cache-size=TOOLS_CACHE_SIZE
-                        Max tool cache size (default: 30GiB)
-    -C=BUILD_TARGETS, --target=BUILD_TARGETS
-                        Targets to build
-  Authorization options
-    --key=SSH_KEYS      Path to private ssh key to exchange for OAuth token
-    --token=OAUTH_TOKEN oAuth token
-    --user=USERNAME     Custom user name for authorization
-```
 
 #### Пример
 ```bash
