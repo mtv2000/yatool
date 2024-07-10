@@ -51,7 +51,7 @@ ya style . --py    # обновить стиль всех python-файлов в
 ### Java
 Для `java` существует отдельная команда `ya jstyle`
 
-Отформатировать Java-код.
+Отформатировать `Java`-код.
 
 `ya jstyle [OPTION]... [TARGET]...`
 
