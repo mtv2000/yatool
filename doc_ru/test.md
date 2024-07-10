@@ -172,7 +172,7 @@ NO_CHECK_IMPORTS( # Отключить проверку
 
 Минимальный `ya.make` файл выглядит так:
 
-- JUnit4
+- **JUnit4**
   ```
   JTEST()
 
@@ -186,7 +186,7 @@ NO_CHECK_IMPORTS( # Отключить проверку
 
   END()
   ```
-- JUnit5
+- **JUnit5**
   ```
   JUNIT5()
   JAVE_SRCS(FileTest.java)
@@ -208,7 +208,7 @@ NO_CHECK_IMPORTS( # Отключить проверку
 * `GO_TEST_FOR(path/to/testing/module)`: система сборки будет искать тесты в `GO_TEST_SRCS` в тестируемом модуле.
 
 Минимальные `ya.make` файлы выглядят так:
-- GO_TEST()
+- **GO_TEST()**
   ```
   GO_TEST()
 
@@ -216,7 +216,8 @@ NO_CHECK_IMPORTS( # Отключить проверку
 
   END()
   ```
-- GO_TEST_FOR()
+- **GO_TEST_FOR()**
+  
   В `project/ya.make` в макросе `GO_TEST_SRCS` перечисляются тестовые файлы:
   ```
   GO_LIBRARY() | GO_PROGRAM()
@@ -247,7 +248,7 @@ NO_CHECK_IMPORTS( # Отключить проверку
 - `--retest`: Принудительный перезапуск тестов без использования кэша.
 
 **Пример**
-```
+```bash
 $ ya test -t devtools/examples/tutorials/python
 ```
 Запустит все тесты, которые найдёт по `RECURSE`/`RECURSE_FOR_TESTS` от `devtools/examples/tutorials/python`, включая тесты стиля и тесты импорта для Python. 
@@ -268,15 +269,15 @@ $ ya test -t devtools/examples/tutorials/python
 Эти опции позволяют контролировать объем информации, которые возвращаются после запуска тестов, и помогают быстрее находить и исправлять ошибки:
 
 * `-L`, `--list-tests`: Выводит список тестов, которые будут выполнены.
-```
+```bash
 ya test -tL
 ```
 * `--fail-fast`: Завершает выполнение тестов при первой неудаче.
-```
+```bash
 ya test -t --fail-fast
 ```
 * `-P`, `--show-passed-tests`: Показать пройденные тесты.
-```
+```bash
 ya test -t --show-passed-tests
 ```
 * `--show-skipped-tests`: Показать пропущенные тесты.
@@ -286,13 +287,13 @@ ya test -t --show-passed-tests
 Для прошедших и проигнорированных (отфильтрованных) тестов будет выдан только общий короткий статус с количеством тех и других тестов.
 
 Примеры полного отчета при использовании различных опций:
-```
+```bash
 ya test -t --show-passed-tests --show-skipped-tests --show-metrics
 ```
 В этом примере выводится информация о всех успешно пройденных тестах, отфильтрованных тестах, а также метрики тестирования, что дает полный обзор выполненных действий и результатов тестирования.
 
 **Пример**
-```
+```bash
 # Список всех пользовательских тестов (без тестов стиля, импортов и подобных проверок)
 ya test -AL --regular-tests devtools/examples/tutorials/python
 ```
@@ -310,32 +311,32 @@ ya test -AL --regular-tests devtools/examples/tutorials/python
 Фильтрация тестов:
 
 1. `-F=TESTS_FILTERS`, `--test-filter=TESTS_FILTERS`: Запуск только определенных тестов по имени, шаблону или фильтру.
-```
+```bash
 ya test -A -F "subname"
 ```
 В фильтрах можно использовать символы подстановки, такие как `*`, который соответствует любому количеству символов. 
 Каждый последующий фильтр расширяет множество тестов для запуска.
-```
+```bash
 $ ya test -t -F <file>.py::<ClassName>::*
 ```
 2. `--test-tag=TEST_TAGS_FILTER`: Запуск тестов, помеченных определенными тегами.
-```
+```bash
 ya test -A --test-tag tag1+tag2-tag3
 ```
 Эта команда запустит все тесты, у которых есть теги `tag1` и `tag2` и нет тега `tag3`.
 
 3. `--test-size=TEST_SIZE_FILTERS`: Запуск тестов определенного размера (SMALL, MEDIUM, LARGE).
-```
+```bash
 ya test -A --test-size=MEDIUM
 ```
 4. `--test-type=TEST_TYPE_FILTERS`: Запуск тестов определенного типа (например, `UNITTEST`, `PYTEST`).
-```
+```bash
 ya test -tt --test-type unittest+gtest
 ```
 Эта команда запустит только тесты типов unittest и gtest.
 
 5. `--test-filename=TEST_FILES_FILTER`: Запуск тестов из указанного исходного файла.
-```
+```bash
 ya test -A --test-filename=test_example.py
 ```
 6. `-X`, `--last-failed-tests`: Запустить только тесты, упавшие в предыдущем запуске.
@@ -353,9 +354,10 @@ ya test -A --test-filename=test_example.py
 и игнорирование ошибок с помощью комментариев `# noqa` или `# noqa: E101`.  
 Ошибку `F401` можно подавить в файле `__init__.py` с помощью `# flake8 noqa: F401`.  
 Для директории `contrib` можно отключить проверку стиля через макрос `NO_LINT()`.  
+
 Для проектов на Python 3 линтер `black` подключается с помощью макроса `STYLE_PYTHON()`, который генерирует тесты для проверки стиля кода.
 Запустить тесты `black` можно командой: 
-```
+```bash
 ya test -t --test-type black.
 ```
 Импорт-тесты проверяют импортируемость программ `Python`, собранных из модулей, обнаруживая конфликты и отсутствующие файлы.  
@@ -381,8 +383,8 @@ ya test -t --test-type black.
 Для кода на `C++` применяется `clang-tidy`, который используется для статического анализа.
 Его можно запустить с флагом `ya test -t -DTIDY`.
 
-Пример ya.make файла с проверками стиля может выглядеть так:
-```
+Пример `ya.make` файла с проверками стиля может выглядеть так:
+```yamake
 PY3_LIBRARY()
 
 PY_SRCS(
@@ -415,7 +417,7 @@ END()
 Поддерживаются санитайзеры `AddressSanitizer`, `MemorySanitizer`, `ThreadSanitizer`, `UndefinedBehaviorSanitizer` и `LeakSanitizer`.
 
 Запуск с санитайзером:
-```
+```bash
 ya test -t --sanitize=address
 ```
 Для правильной работы санитайзеров можно зафиксировать опции для конкретных тестов через макрос `ENV()`.
@@ -426,7 +428,7 @@ ya test -t --sanitize=address
 Автоматический фаззинг поддерживается через `libFuzzer`.
 
 Пример запуска фаззинга:
-```
+```bash
 ya test -r --sanitize=address --sanitize-coverage=trace-div,trace-gep -A --fuzzing
 ```
 Во время фаззинга записываются различные метрики, такие как размер корпуса, количество проверенных кейсов, пиковое потребление памяти и другие.
@@ -463,14 +465,14 @@ END()
 
 Тип | Описание
 :--- | :---
-`black` | Проверка форматирования кода на python3 утилитой black.
-`classpath.clash` | Проверка наличия дублирующихся классов в classpath при компиляции Java проекта.
-`eslint` | Проверка стиля и типичных ошибок кода на TypeScript с использованием утилиты ESLint.
+`black` | Проверка форматирования кода на `python3` утилитой `black`.
+`classpath.clash` | Проверка наличия дублирующихся классов в `classpath` при компиляции `Java` проекта.
+`eslint` | Проверка стиля и типичных ошибок кода на `TypeScript` с использованием утилиты `ESLint`.
 `exectest` | Выполнение произвольной команды и проверка её кода возврата
-`flake8.py2` | Проверка стиля кода на Python 2 c использованием утилиты Flake8
-`flake8.py3` | Проверка стиля кода на Python 3 c использованием утилиты Flake8
+`flake8.py2` | Проверка стиля кода на `Python 2` c использованием утилиты `Flake8`
+`flake8.py3` | Проверка стиля кода на `Python 3` c использованием утилиты `Flake8`
 `fuzz` | [Fuzzing](https://en.wikipedia.org/wiki/Fuzzing) тест
-`g_benchmark` | Выполнение бенчмарков на C++ библиотекой [Google Benchmark](https://github.com/google/benchmark)
+`g_benchmark` | Выполнение бенчмарков на `C++` библиотекой [Google Benchmark](https://github.com/google/benchmark)
 `go_bench` | Выполнение бенчмарков на Go утилитой `go bench`
 `gofmt` | Проверка форматирования кода на Go утилитой `go fmt`
 `go_test` | Выполнение тестов на Go утилитой `go test`
@@ -482,4 +484,4 @@ END()
 `py2test` | Тесты на Python 2 с использованием фреймворка [pytest](https://pytest.org/)
 `py3test` | Тесты на Python 3 с использованием фреймворка [pytest](https://pytest.org/)
 `pytest` | Тесты на Python любой версии с использованием фреймворка [pytest](https://pytest.org/)
-`unittest`| Тесты на C++ с использованием фреймворка unittest.
+`unittest`| Тесты на C++ с использованием фреймворка `unittest.`
