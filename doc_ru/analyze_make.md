@@ -12,7 +12,7 @@
 
 1. Сбор и анализ данных:
 - Каждый раз при запуске `ya make` создается `event log` (лог событий), который сохраняется в директорий `~/.ya/evlogs/`.
-- Команда `ya analyze-make timeline` строит трейс (trace) на основе этих логов для дальнейшего анализа.
+- Команда `ya analyze-make timeline` строит трейс (`trace`) на основе этих логов для дальнейшего анализа.
 
 2. Форматы выходных данных:
 - По умолчанию, `ya analyze-make timeline` генерирует трейсы, которые могут быть отображены в браузерах `Яндекс Браузер` (через `browser://tracing`) и `Chrome` (через `chrome://tracing/`).
@@ -30,7 +30,7 @@ Open about://tracing in Chromium and load 14-27-47.ndpzv5xlrled702w.evlog.json f
 ### Опции
 
 * `--evlog=ANALYZE_EVLOG_FILE` - Анализировать лог из файла
-* `--format=OUTPUT_FORMAT` - Формат вывода, по умолчанию chromium_trace 
-* `--plot` - Формат вывода plot (matplotlib)
+* `--format=OUTPUT_FORMAT` - Формат вывода, по умолчанию `chromium_trace` 
+* `--plot` - Формат вывода `plot` (`matplotlib`)
 * `-h`, `--help` - Справка
 
