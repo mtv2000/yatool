@@ -27,7 +27,7 @@ macro MY_MACRO(PARAM1, PARAM2) {
        when ($CONDITION == "yes") {
            SET(VAR "value1")
        }
-   otherwise {
+       otherwise {
            SET(VAR "value2")
        }
    }
