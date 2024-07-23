@@ -12,33 +12,33 @@
 
 Пример:
 ```plaintext
-   module MY_LIBRARY: _LIBRARY {
+module MY_LIBRARY: _LIBRARY {
        // Код модуля
-   }
+}
 ```
 Внутри модуля можно устанавливать переменные с помощью функции `SET` и вызывать другие функции для выполнения определенных действий. Модули могут содержать условия, зависящие от значений переменных. Модуль может иметь локальные переменные, которые могут изменить поведение как его собственной команды, так и других команд, связанных с его сборкой. На основе переменных также могут быть определены условные правила поведения модуля.
 
 Пример:
 ```plaintext
-   module MY_LIBRARY: _LIBRARY {
-      when ($CONDITION == "yes") {
-           SET(MODULE_TYPE LIBRARY)
-           SET(MODULE_LANG CPP)
-       }
+module MY_LIBRARY: _LIBRARY {
+  when ($CONDITION == "yes") {
+       SET(MODULE_TYPE LIBRARY)
+       SET(MODULE_LANG CPP)
    }
+}
 ```
 Модуль позволяет устанавливать различные атрибуты, которые определяют его функциональные возможности и свойства. 
 Эти атрибуты могут включать глобальные переменные и другие параметры, которые оказывают влияние на поведение и работу всего проекта.
 
 Пример:
 ```plaintext
-   module MY_LIBRARY: _LIBRARY {
-       .GLOBAL=_AARS _PROGUARD_RULES
-       .SEM=CPP_LIBRARY_SEM
-       .DEFAULT_NAME_GENERATOR=ThreeDirNames
-       SET(MODULE_TYPE LIBRARY)
-       SET(MODULE_LANG CPP)
-   }
+module MY_LIBRARY: _LIBRARY {
+    .GLOBAL=_AARS _PROGUARD_RULES
+    .SEM=CPP_LIBRARY_SEM
+    .DEFAULT_NAME_GENERATOR=ThreeDirNames
+    SET(MODULE_TYPE LIBRARY)
+    SET(MODULE_LANG CPP)
+}
 ```
 Список доступных макросов и модулей непрерывно растет. 
 Для поддержания актуальности, на основе комментариев и описаний автоматически генерируется документация, содержащая информацию обо всех доступных на данный момент макросах и модулях.
