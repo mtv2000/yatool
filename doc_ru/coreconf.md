@@ -244,6 +244,6 @@ macro CUSTOM_BUILD_STEP(Param1, Param2) {
 - {input:"build/scripts/my_build_script.py"} — путь к вашему скрипту.
 - {input:Param1} и {output:Param2} — параметры, передаваемые в скрипт.
 
-###Ошибка UnkStatm
+### Ошибка UnkStatm
 
 Ошибка `UnkStatm` возникает в случае вызова неизвестного макроса в файле сборки проекта `ya.make`. Макросы, которые можно использовать в сборке, описаны в `ymake.core.conf` или в плагинах `build/plugins`.
