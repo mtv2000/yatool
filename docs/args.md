@@ -37,7 +37,7 @@
   ```
 
 **Именованные параметры** участвуют в вызове своим именем и, возможно, значением. Исторически для именования параметров макросов, как и самих макросов, используется
-(SCREAMING_SNAKE_CASE)[https://ru.wikipedia.org/wiki/Snake_case].
+[SCREAMING_SNAKE_CASE](https://ru.wikipedia.org/wiki/Snake_case).
 
 Именованные параметры бывают:
 
